@@ -79,7 +79,7 @@ public class Day1Ex12Main {
 
     }
 
-    private static int ownModuloImplementation(int divident, int divider){
+    protected static int ownModuloImplementation(int divident, int divider){
 
         int tmp=divident/divider;
 
@@ -99,10 +99,6 @@ public class Day1Ex12Main {
         int javaModulo = divident%divider;
         int ownModulo = ownModuloImplementation(divident,divider);
 
-        if (javaModulo==ownModulo){
-            return true;
-        }
-
-        return false;
+        return javaModulo==ownModulo;
     }
 }
