@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Day1Ex11Main {
 
-    private static final int RANDOM_NUMBER = new Random().nextInt(100) + 1;
+    private static final int RANDOM_NUMBER = new Random().nextInt(101);
 
     public static void main(String[] args) {
         runMyGame();
