@@ -11,7 +11,7 @@ public class Day1Ex14Main {
 
     private static final int DEFAULT_MIN_NUMBER_OF_INSTALLMENTS = 18;
     private static final int DEFAULT_MAX_NUMBER_OF_INSTALLMENTS = 36;
-    public static final int MIN_NUMBER_OF_INSTALLMENTS = 6;
+    private static final int MIN_NUMBER_OF_INSTALLMENTS = 6;
     private static final int MAX_NUMBER_OF_INSTALLMENTS = 48;
 
     public static void main(String[] args) {
@@ -31,7 +31,7 @@ public class Day1Ex14Main {
         int numberOfInstallments = scanner.nextInt();
         scanner.nextLine();
 
-        numberOfInstallments = validateNumberOfInstallments(numberOfInstallments);
+        numberOfInstallments = validateAndSetNumberOfInstallments(numberOfInstallments);
 
         float interestRate = setInterestRate(numberOfInstallments);
 
@@ -55,7 +55,7 @@ public class Day1Ex14Main {
         return loanAmount;
     }
 
-    private static int validateNumberOfInstallments(int numberOfInstallments) {
+    private static int validateAndSetNumberOfInstallments(int numberOfInstallments) {
 
         if (numberOfInstallments < MIN_NUMBER_OF_INSTALLMENTS) {
             System.out.println("Number of installments is too low. Default value 18 was set");
@@ -71,22 +71,24 @@ public class Day1Ex14Main {
 
     private static float setInterestRate(int numberOfInstallments) {
 
+        float interestRate = 1.0f;
+
         if (numberOfInstallments >= 6 && numberOfInstallments <= 12) {
-            return 0.025f;
+            interestRate += 0.025f;
         }
         if (numberOfInstallments >= 13 && numberOfInstallments <= 24) {
-            return 0.05f;
+            interestRate += 0.05f;
         }
         if (numberOfInstallments >= 25 && numberOfInstallments <= 48) {
-            return 0.1f;
+            interestRate += 0.1f;
         }
 
-        return 0;
+        return interestRate;
     }
 
     private static float calculateSingleInstalment(int loanAmount, int numberOfInstallments, float interestRate) {
 
-        float singleInstalment = loanAmount * (1 + interestRate) / numberOfInstallments;
+        float singleInstalment = loanAmount * interestRate / numberOfInstallments;
 
         return (float) Math.round(singleInstalment * 100) / 100;
 
