@@ -1,5 +1,7 @@
 package day1.ex14;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Scanner;
 
 public class Day1Ex14Main {
@@ -33,11 +35,11 @@ public class Day1Ex14Main {
 
         numberOfInstallments = validateAndSetNumberOfInstallments(numberOfInstallments);
 
-        float interestRate = setInterestRate(numberOfInstallments);
+        BigDecimal bdInterestRate = setInterestRate(numberOfInstallments);
 
-        float singleInstalment = calculateSingleInstalment(loanAmount, numberOfInstallments, interestRate);
+        BigDecimal bdSingleInstalment = calculateSingleInstalment(loanAmount, numberOfInstallments, bdInterestRate);
 
-        System.out.println("Single instalment: "+singleInstalment);
+        System.out.println("Single instalment: "+bdSingleInstalment);
 
     }
 
@@ -69,28 +71,31 @@ public class Day1Ex14Main {
         return numberOfInstallments;
     }
 
-    private static float setInterestRate(int numberOfInstallments) {
+    private static BigDecimal setInterestRate(int numberOfInstallments) {
 
-        float interestRate = 1.0f;
+        BigDecimal bdInterestRate = BigDecimal.valueOf(1.0);
 
         if (numberOfInstallments >= 6 && numberOfInstallments <= 12) {
-            interestRate += 0.025f;
+            bdInterestRate=bdInterestRate.add(BigDecimal.valueOf(0.025));
         }
         if (numberOfInstallments >= 13 && numberOfInstallments <= 24) {
-            interestRate += 0.05f;
+            bdInterestRate=bdInterestRate.add(BigDecimal.valueOf(0.050));
         }
         if (numberOfInstallments >= 25 && numberOfInstallments <= 48) {
-            interestRate += 0.1f;
+            bdInterestRate=bdInterestRate.add(BigDecimal.valueOf(0.100));
         }
 
-        return interestRate;
+        return bdInterestRate;
     }
 
-    private static float calculateSingleInstalment(int loanAmount, int numberOfInstallments, float interestRate) {
+    private static BigDecimal calculateSingleInstalment(int loanAmount, int numberOfInstallments, BigDecimal bdInterestRate) {
 
-        float singleInstalment = loanAmount * interestRate / numberOfInstallments;
+        BigDecimal bdLoanAmount = BigDecimal.valueOf(loanAmount);
+        BigDecimal bdNumberOfInstallments = BigDecimal.valueOf(numberOfInstallments);
 
-        return (float) Math.round(singleInstalment * 100) / 100;
+        BigDecimal bdSingleInstalment = bdLoanAmount.multiply(bdInterestRate).divide(bdNumberOfInstallments,2, RoundingMode.HALF_UP);
+
+        return bdSingleInstalment;
 
     }
 }
